@@ -1,0 +1,2 @@
+# MnistCNN
+使用Pytorch和CNN实现手写数字识别，并使用TensorRT部署，尝试使用CUDA开发实现多路识别
