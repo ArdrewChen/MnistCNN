@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" id="2a277b51-9e7c-4a44-9531-56abb521a809" port="22" customName="zsc" nameFormat="CUSTOM" useOpenSSHConfig="true">
+        <option name="customName" value="zsc" />
+      </sshConfig>
+    </configs>
+  </component>
+</project>
