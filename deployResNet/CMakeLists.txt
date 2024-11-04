@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.10)
+project(MoudleDeploy VERSION 1.0 LANGUAGES CXX CUDA)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src SRC ) 
+add_executable(resnet ${SRC})
