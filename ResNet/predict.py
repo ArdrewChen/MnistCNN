@@ -1,3 +1,5 @@
+# 预测
+
 from PIL import Image
 from torchvision import transforms
 import torch
