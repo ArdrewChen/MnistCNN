@@ -3,7 +3,9 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/data/Evo/TensorRT/TensorRT-8.6.1.6/include",
+                "/usr/local/cuda/include/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

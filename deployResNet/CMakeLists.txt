@@ -34,7 +34,7 @@ add_executable(resnet ${SRC})
 
 # 链接TensorRT库
 target_link_libraries(resnet ${TENSORRT_LIB_NVINFER} ${TENSORRT_LIB_NVINFER_PLUGIN})
-
+target_link_libraries(resnet nvonnxparser)
 # 设置环境变量，确保运行时可以找到TensorRT库
 set(ENV{PATH} "/data/Evo/TensorRT/TensorRT-8.6.1.6/bin:$ENV{PATH}")
 set(ENV{LD_LIBRARY_PATH} "/data/Evo/TensorRT/TensorRT-8.6.1.6/lib:$ENV{LD_LIBRARY_PATH}")
