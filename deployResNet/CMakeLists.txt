@@ -28,6 +28,8 @@ if (NOT TENSORRT_LIB_NVINFER OR NOT TENSORRT_LIB_NVINFER_PLUGIN)
     message(FATAL_ERROR "TensorRT libraries nvinfer or nvinfer_plugin not found!")
 endif()
 
+# 添加编译选项 -Wno-deprecated-declarations
+add_compile_options(-Wno-deprecated-declarations)
 
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src SRC ) 
 add_executable(resnet ${SRC})

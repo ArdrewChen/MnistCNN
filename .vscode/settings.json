@@ -1,6 +1,9 @@
 {
     "cmake.ignoreCMakeListsMissing": true,
     "files.associations": {
-        "vector": "cpp"
+        "vector": "cpp",
+        "iosfwd": "cpp",
+        "fstream": "cpp",
+        "*.tcc": "cpp"
     }
 }

@@ -3,5 +3,11 @@
 #include "resnet34.h"
 
 int main(){
-    Resnet34 resnet34("1","2","3");
+    mParams parmas;
+    parmas.onnxFile = "../resources/resnet34.onnx";
+    parmas.engineFile = "../resources/resnet34.engine";
+    Resnet34 resnet34(parmas);
+    std::cout << "start build" << std::endl;
+
+    resnet34.buildNet();
 }

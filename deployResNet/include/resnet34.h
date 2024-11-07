@@ -15,6 +15,13 @@ struct InferDeleter
     }
 };
 
+// 参数结构体
+struct mParams
+{
+    std::string onnxFile;
+    std::string engineFile;
+};
+
 // unique_ptr指针模板类
 template <typename T>
 using make_unique = std::unique_ptr<T, InferDeleter>;
@@ -31,9 +38,10 @@ class Resnet34
         std::string modelFile;
         std::string inputName;
         std::string outputName;
+        std::string engineFilePath;
 
     public:
-        Resnet34(std::string modelFile, std::string inputName, std::string outputName);
+        Resnet34(const mParams &p);
         void onnxNetInit();     // 网络初始化
         bool buildNet();        // 构建网络
         // 使用 ONNX 解析器创建 Onnx 网络并标记输出层
@@ -41,4 +49,5 @@ class Resnet34
                               make_unique<nvinfer1::INetworkDefinition> &network,
                               make_unique<nvinfer1::IBuilderConfig> &config,
                               make_unique<nvonnxparser::IParser> &parser);
+        void saveEngine(std::string enginePath, make_unique<nvinfer1::IHostMemory> &serializeModel);
 };
