@@ -10,4 +10,4 @@ int main(){
     std::cout << "start build" << std::endl;
 
     resnet34.buildNet();
-}
+} 

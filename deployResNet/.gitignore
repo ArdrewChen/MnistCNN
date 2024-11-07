@@ -1,2 +1,3 @@
 build
-resources
+resources/*.engine
+resources/*.onnx
