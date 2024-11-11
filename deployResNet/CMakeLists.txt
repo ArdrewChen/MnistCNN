@@ -6,6 +6,11 @@ include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
 set(CUDA_TOOLKIT_ROOT_DIR /usr/local/cuda)
 # 设置TensorRT的安装路径
 set(TENSORRT_ROOT /data/Evo/TensorRT/TensorRT-8.6.1.6)
+# 设置OpenCV路径
+set(OpenCV_DIR /data/Evo/opencv/build/)
+find_package(OpenCV REQUIRED)
+include_directories($(OpenCV_INCLUDE_DIRS))
+
 # 设置C++标准
 set(CMAKE_CXX_STANDARD 14)
 
@@ -33,6 +38,9 @@ add_compile_options(-Wno-deprecated-declarations)
 
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src SRC ) 
 add_executable(resnet ${SRC})
+
+# 链接OpenCV库
+target_link_libraries(resnet ${OpenCV_LIBS})
 
 # 链接TensorRT库
 target_link_libraries(resnet ${TENSORRT_LIB_NVINFER} ${TENSORRT_LIB_NVINFER_PLUGIN})
