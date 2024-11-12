@@ -6,8 +6,8 @@
 int main(){
     mParams parmas;
     int result;
-    parmas.onnxFile = "../resources/resnet34.onnx";
-    parmas.engineFile = "../resources/resnet34.engine";
+    parmas.onnxFile = "../resources/resnet34_2.onnx";
+    parmas.engineFile = "../resources/resnet34_2.engine";
     Resnet34 resnet34(parmas);
     resnet34.buildNet();
     for (int i = 0; i < 6; i++)

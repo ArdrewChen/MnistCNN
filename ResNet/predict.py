@@ -46,5 +46,5 @@ if __name__ == "__main__":
     # 预测数据
     for i in range(6):
         img_path = "../temp/" + str(i) + ".png"
-        model_path = "./models/resnet34.pkl"
+        model_path = "./models/resnet34_2.pkl"
         predict(img_path, model_path)

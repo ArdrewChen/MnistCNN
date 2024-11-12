@@ -1,8 +1,8 @@
 # 将pytorch模型转化为onnx格式
 import torch
 
-onnx_file_name = "./models/resnet34.onnx"
-model = torch.load("./models/resnet34.pkl")
+onnx_file_name = "./models/resnet34_2.onnx"
+model = torch.load("./models/resnet34_2.pkl")
 model.eval()
 batch_size = 1
 dummy_input = torch.randn(batch_size, 1, 28, 28, requires_grad=True)

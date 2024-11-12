@@ -170,11 +170,11 @@ bool Resnet34::inferNet(std::string imagePath, int &result)
     int outputSize = getMemorySize(output_dims);
 
     // 申请设备内存
-    cudaMalloc((void **)&d_buffer[0], inputSize*sizeof(float*));
-    cudaMalloc((void **)&d_buffer[1], outputSize*sizeof(float*));
+    cudaMalloc((void **)&d_buffer[0], inputSize*sizeof(float));
+    cudaMalloc((void **)&d_buffer[1], outputSize*sizeof(float));
     // 申请主机内存
     h_buffer = new float[outputSize];
-    cudaMemcpyAsync(d_buffer[0], image.data, inputSize*sizeof(float*), cudaMemcpyHostToDevice, stream);
+    cudaMemcpyAsync(d_buffer[0], image.data, inputSize*sizeof(float), cudaMemcpyHostToDevice, stream);
     // 加入推理队列
     mContext->enqueueV2(d_buffer, stream, nullptr);
     cudaMemcpyAsync(h_buffer, d_buffer[1], outputSize*sizeof(float), cudaMemcpyDeviceToHost, stream);
