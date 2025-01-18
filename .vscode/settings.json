@@ -8,9 +8,8 @@
         "istream": "cpp",
         "iostream": "cpp"
     },
+    "C_Cpp.codeAnalysis.clangTidy.enabled": false,
     "C_Cpp.codeAnalysis.clangTidy.checks.disabled": [
-        "clang-diagnostic-error",
-        "clang-diagnostic-error",
         "clang-diagnostic-error"
     ]
 }
