@@ -34,6 +34,9 @@ struct Images
 template <typename T>
 using make_unique = std::unique_ptr<T, InferDeleter>;
 
+/**
+ * \brief Resnet34网络推理类
+ */
 class Resnet34
 {
     private:

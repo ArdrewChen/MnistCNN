@@ -25,7 +25,7 @@ def predict(img_path, model_path):
     # img.show()
     # 由于训练数据以黑色为底的图片，预测图片为白色为底，需要进行转换
     img = img.point(lambda x: 255 - x)
-    # img.show()
+    #  img.show()
     # 图片尺寸修改，转化为张量
     img = transforms(img)
     # 加载模型

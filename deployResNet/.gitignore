@@ -1,3 +1,4 @@
 build
 resources/*.engine
 resources/*.onnx
+bin
