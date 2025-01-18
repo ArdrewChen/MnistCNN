@@ -7,5 +7,8 @@
         "*.tcc": "cpp",
         "istream": "cpp",
         "iostream": "cpp"
-    }
+    },
+    "C_Cpp.codeAnalysis.clangTidy.checks.disabled": [
+        "clang-diagnostic-error"
+    ]
 }
