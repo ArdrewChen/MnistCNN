@@ -1,5 +1,5 @@
 #include <iostream>
-void test()
+int main()
 {
-    std::cout << "Cmake test sucess" << std::endl;
+    std::cout<<"This is a test exe"<<std::endl;
 }

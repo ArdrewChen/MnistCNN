@@ -73,6 +73,63 @@ bool InferUtils::BuildEngine()
 
 }
 
+bool InferUtils::RunEngine(float* input_data, float* infer_reuslt )
+{
+    // 创建运行时接口
+    auto m_runtime = make_unique<nvinfer1::IRuntime>(nvinfer1::createInferRuntime(logger));  
+    std::vector<unsigned char> engine_model = LoadEngine();                               // 加载引擎文件
+    auto m_engine = make_unique<nvinfer1::ICudaEngine>(m_runtime->deserializeCudaEngine(engine_model.data(), engine_model.size())); // 反序列化生成引擎
+    if(!m_engine)
+    {
+        std::cerr << "Failed to desrializeCudaEngine" << std::endl;
+        return false;
+    }
+    auto m_context = make_unique<nvinfer1::IExecutionContext>(m_engine->createExecutionContext());    // 创建上下文对象
+    if(!m_context)
+    {
+        std::cerr << "Failed to creat context" << std::endl;
+    }
+
+    auto input_dims = m_context->getBindingDimensions(0);
+    auto output_dims = m_context->getBindingDimensions(1);
+
+    auto input_idx = m_engine->getBindingIndex("input");
+    auto output_idx = m_engine->getBindingIndex("output");
+    // 创建cuda流，用于内存管理
+    cudaStream_t stream = nullptr;
+    cudaStreamCreate(&stream);
+
+    // 初始化主机内存
+    float *h_buffer = nullptr;
+    // 初始化设备内存, enqueueV2的输入是一个指针数组，包含输入和输出，因此此处需要一个数组
+    // d_buffer[0]表示输入数据，d_buffer[1]表示输出数据
+    void* d_buffer[2];
+    int input_size = getMemorySize(input_dims);
+    int output_size = getMemorySize(output_dims);
+
+    // 申请设备内存
+    cudaMalloc((void **)&d_buffer[0], input_size*sizeof(float));
+    cudaMalloc((void **)&d_buffer[1], output_size*sizeof(float));
+    // 申请主机内存
+    h_buffer = new float[output_size];
+    cudaMemcpyAsync(d_buffer[0], input_data, input_size*sizeof(float), cudaMemcpyHostToDevice, stream);
+    // 加入推理队列
+    m_context->enqueueV2(d_buffer, stream, nullptr);
+    cudaMemcpyAsync(h_buffer, d_buffer[1], output_size*sizeof(float), cudaMemcpyDeviceToHost, stream);
+    cudaStreamSynchronize(stream);  // 阻塞流，流同步
+    for(int i=0; i<output_size; i++)
+    {
+        infer_reuslt[i] = h_buffer[i];
+    }
+
+    // 释放内存
+    delete[] h_buffer;
+    cudaFree(d_buffer[0]);
+    cudaFree(d_buffer[1]);
+    cudaStreamDestroy(stream);
+    return true;
+
+}
 
 bool InferUtils::CheckEngineExist()
 {
@@ -107,39 +164,39 @@ bool InferUtils::ConstructNetwork(make_unique<nvinfer1::IBuilderConfig>& config,
 
 void InferUtils::SaveEngine(make_unique<nvinfer1::IHostMemory> &serializeModel)
 {
-    std::ofstream sEngine(m_engine_file, std::ios::binary);  //此处以二进制读取
-    if(sEngine.good())
+    std::ofstream s_engine(m_engine_file, std::ios::binary);  //此处以二进制读取
+    if(s_engine.good())
     {
-        sEngine.write(reinterpret_cast<const char*>(serializeModel->data()),serializeModel->size());
-        sEngine.close();
+        s_engine.write(reinterpret_cast<const char*>(serializeModel->data()),serializeModel->size());
+        s_engine.close();
         exit(-1);
     }
     else
     {
         std::cerr << "Could not open output file" << std::endl;
-        sEngine.close();
+        s_engine.close();
         exit(-1);
     }
 }
 
 std::vector<unsigned char> InferUtils::LoadEngine()
 {
-    std::ifstream engineFile(m_engine_file, std::ios::binary);
-    if(engineFile.good())
+    std::ifstream engine_file(m_engine_file, std::ios::binary);
+    if(engine_file.good())
     {
-        engineFile.seekg(0, std::ios::end);
-        size_t size = engineFile.tellg(); // 获取文件指针的位置
+        engine_file.seekg(0, std::ios::end);
+        size_t size = engine_file.tellg(); // 获取文件指针的位置
         std::vector<unsigned char> data(size);
-        engineFile.seekg(0, std::ios::beg);
-        engineFile.read((char *)data.data(), size);
-        engineFile.close();
+        engine_file.seekg(0, std::ios::beg);
+        engine_file.read((char *)data.data(), size);
+        engine_file.close();
         return data;
     }
     else
     {
         std::vector<unsigned char> data = {};
         std::cerr << "Failed to open engineFile" << std::endl;
-        engineFile.close();
+        engine_file.close();
         return data;
     }
 }

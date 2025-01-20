@@ -9,7 +9,7 @@ set(TENSORRT_ROOT /data/Evo/TensorRT/TensorRT-8.6.1.6)
 # 设置OpenCV路径
 set(OpenCV_DIR /data/Evo/opencv/build/)
 find_package(OpenCV REQUIRED)
-include_directories($(OpenCV_INCLUDE_DIRS))
+include_directories(${OpenCV_INCLUDE_DIRS})
 
 # 设置C++标准
 set(CMAKE_CXX_STANDARD 14)
@@ -36,8 +36,22 @@ endif()
 # 添加编译选项 -Wno-deprecated-declarations
 add_compile_options(-Wno-deprecated-declarations)
 
-aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src SRC ) 
-add_executable(resnet ${SRC})
+# 获取所有源文件
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src MAIN)
+
+# 手动排除文件
+list(REMOVE_ITEM MAIN
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/test.cpp"
+)
+add_executable(resnet ${MAIN})
+
+# 获取所有源文件
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src TEST)
+# 手动排除文件
+list(REMOVE_ITEM TEST
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
+)
+add_executable(test ${CMAKE_CURRENT_SOURCE_DIR}/src/test.cpp)
 
 # 链接OpenCV库
 target_link_libraries(resnet ${OpenCV_LIBS})

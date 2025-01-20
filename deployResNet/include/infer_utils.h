@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include "utils.h"
 
 /**
  * \brief 日志类
@@ -101,6 +102,14 @@ class InferUtils
          * \return 加载成功返回true,否则返回false
          */
         std::vector<unsigned char> LoadEngine();
+
+        /**
+         * \brief 推理引擎
+         * \param input_data 输入数据
+         * \param infer_result 推理输出结果
+         * \return 运行成功返回true,失败返回false
+         */
+        bool RunEngine(float* input_data, float* infer_result);
         
 
 };
