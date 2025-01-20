@@ -6,11 +6,13 @@
         "fstream": "cpp",
         "*.tcc": "cpp",
         "istream": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "ios": "cpp",
+        "locale": "cpp"
     },
+    "C_Cpp.codeAnalysis.clangTidy.enabled": false,
     "C_Cpp.codeAnalysis.clangTidy.checks.disabled": [
-        "clang-diagnostic-error",
-        "clang-diagnostic-error",
         "clang-diagnostic-error"
     ]
 }
