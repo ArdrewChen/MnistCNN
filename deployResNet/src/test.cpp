@@ -1,5 +1,5 @@
-#include <iostream>
+#include "resnet34.h"
 int main()
 {
-    std::cout<<"This is a test exe"<<std::endl;
+
 }

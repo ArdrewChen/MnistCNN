@@ -45,13 +45,13 @@ list(REMOVE_ITEM MAIN
 )
 add_executable(resnet ${MAIN})
 
-# 获取所有源文件
-aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src TEST)
-# 手动排除文件
-list(REMOVE_ITEM TEST
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
-)
-add_executable(test ${CMAKE_CURRENT_SOURCE_DIR}/src/test.cpp)
+# # 获取所有源文件
+# aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src TEST)
+# # 手动排除文件
+# list(REMOVE_ITEM TEST
+#     "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
+# )
+# add_executable(test ${TEST})
 
 # 链接OpenCV库
 target_link_libraries(resnet ${OpenCV_LIBS})

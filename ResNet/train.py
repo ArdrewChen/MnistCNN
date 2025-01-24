@@ -49,6 +49,7 @@ test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
 # 定义的时候要指定分类的数量，保证最后的输出正确
 model = resnet34(num_classes=10)
+print(model)
 
 # 断点续训
 if os.path.exists(model_path):

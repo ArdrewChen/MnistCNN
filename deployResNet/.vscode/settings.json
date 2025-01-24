@@ -69,5 +69,9 @@
         "set": "cpp",
         "unordered_set": "cpp",
         "typeindex": "cpp"
-    }
+    },
+    "C_Cpp.codeAnalysis.clangTidy.checks.disabled": [
+        "*"
+    ],
+    "editor.fontSize": 16
 }
