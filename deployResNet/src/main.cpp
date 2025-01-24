@@ -1,20 +1,21 @@
-#include <iostream>
-#include "tools.h"
 #include "resnet34.h"
-#include "imageProcess.h"
 
 int main(){
-    mParams parmas;
     int result;
-    parmas.onnxFile = "../resources/resnet34_2.onnx";
-    parmas.engineFile = "../resources/resnet34_2.engine";
-    Resnet34 resnet34(parmas);
-    resnet34.buildNet();
-    for (int i = 0; i < 6; i++)
+    InferParams m_parmas;
+    m_parmas.engine_file = "../resources/resnet34_2.engine";
+    m_parmas.onnx_file = "../resources/resnet34_2.onnx";
+    m_parmas.is_dynamic_input = true;
+    m_parmas.min_input_dims4 = nvinfer1::Dims4(1, 1, 28, 28);
+    m_parmas.opt_input_dims4 = nvinfer1::Dims4(1, 1, 28, 28);
+    m_parmas.max_input_dims4 = nvinfer1::Dims4(1, 1, 28, 28);
+
+    Resnet34 resnet34(m_parmas);
+    for (int i = 1; i < 6; i++)
     {
         std::string imagePath = "../../temp/" + std::to_string(i) + ".png";
         std::cout << imagePath << std::endl;
-        resnet34.inferNet(imagePath, result);
+        resnet34.Run(imagePath, result);
         std::cout << "Infer result:" <<result << std::endl;
     }
         

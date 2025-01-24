@@ -43,3 +43,14 @@ void errif(bool condition, const char *errmsg)
     }
 }
 
+int getMaxIndex(float *h_buffer, const int len)
+{
+    int maxIndex;
+    float maxValue = -1;
+    for (int i = 0; i < len; i++)
+    {
+        h_buffer[i] > maxValue ? maxValue = h_buffer[i], maxIndex = i : false;
+    }
+    return int(maxIndex);
+}
+

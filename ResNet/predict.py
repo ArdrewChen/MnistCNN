@@ -36,7 +36,7 @@ def predict(img_path, model_path):
     my_model.eval()
     with torch.no_grad():
         result = my_model(img)
-        # print(result)
+        print(result)
         result = result.argmax(1)
         print(result.item())
         return result

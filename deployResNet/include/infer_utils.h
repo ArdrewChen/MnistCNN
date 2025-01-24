@@ -19,7 +19,7 @@ class Logger : public nvinfer1::ILogger
         if (severity <= Severity::kWARNING)
             std::cout << msg << std::endl;
     }
-} logger;
+};
 
 /**
  * \brief 自定义删除器，调用InferDeleter(T)，实现删除T
@@ -39,19 +39,6 @@ struct InferDeleter
 template <typename T>
 using make_unique = std::unique_ptr<T, InferDeleter>;
 
-/**
- * \brief 网络推理设置参数结构体
- */
-struct InferParams
-{
-    std::string onnx_file;   // onnx文件位置
-    std::string engine_file; // 引擎文件保存地址
-    bool is_dynamic_input;   // 是否为动态输入模型
-    nvinfer1::Dims4 min_input_dims4;    // 动态输入最小尺寸
-    nvinfer1::Dims4 opt_input_dims4;    // 动态输入最优尺寸
-    nvinfer1::Dims4 max_input_dims4;    // 动态输入最大尺寸
-
-};
 
 /**
  * \brief 网络推理的父类，该类主要负责tensorRT推理的常用函数的设置
@@ -65,6 +52,7 @@ class InferUtils
         nvinfer1::Dims4 min_input_dims4;    // 动态输入最小尺寸
         nvinfer1::Dims4 opt_input_dims4;    // 动态输入最优尺寸
         nvinfer1::Dims4 max_input_dims4;    // 动态输入最大尺寸
+        Logger logger;
 
 
         /**
@@ -90,6 +78,7 @@ class InferUtils
 
     public:
         InferUtils(const InferParams& infer_params);
+        ~InferUtils(){};
 
         /**
          * \brief 构建网络函数

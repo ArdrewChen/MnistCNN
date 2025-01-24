@@ -73,7 +73,7 @@ bool InferUtils::BuildEngine()
 
 }
 
-bool InferUtils::RunEngine(float* input_data, float* infer_reuslt )
+bool InferUtils::RunEngine(float* input_data, float* infer_result)
 {
     // 创建运行时接口
     auto m_runtime = make_unique<nvinfer1::IRuntime>(nvinfer1::createInferRuntime(logger));  
@@ -119,9 +119,8 @@ bool InferUtils::RunEngine(float* input_data, float* infer_reuslt )
     cudaStreamSynchronize(stream);  // 阻塞流，流同步
     for(int i=0; i<output_size; i++)
     {
-        infer_reuslt[i] = h_buffer[i];
+        infer_result[i] = h_buffer[i];
     }
-
     // 释放内存
     delete[] h_buffer;
     cudaFree(d_buffer[0]);
